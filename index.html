@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="GimmeMusic">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="Music,Discover Artists"/>
+	<meta name="author" content="Michell Ocaña - Frontend Developer">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="#fbb176">
+
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="dist/css/app.min.css">
+	<title>Gimme Music</title>
+</head>
+<body ng-controller="AppCtrl">	
+	<svg-sprite svg-src="dist/img/img.svg"></svg-sprite>
+	
+	<div class="artist">
+		<img ng-src="{{artist.image}}" 
+			 ng-alt="{{artist.name}}" 
+			 ng-class="{'artist-image--visible': artist}"
+			 class="artist-image">
+
+		<div class="artist-links">
+			<a href="{{link.url}}" 
+			   class="artist-link" 
+			   ng-repeat="link in artist.links" 
+			   target="{{link.type === 'spotify' ? '_self' : '_blank'}}">
+				<svg class="artist-link-icon">
+					<use xlink:href="" ng-attr-xlink:href="{{'#' + link.type}}"></use>
+				</svg>
+			</a>
+		</div>
+	</div>
+
+	<h1 class="artist-name">
+		{{artist.name || 'Choose your styles and i give you an artist'}}
+	</h1>
+
+	<ul class="genres">
+		<li class="genre">
+			Styles i like:
+		</li>
+		<li class="genre">
+			<input type="checkbox" name="genres[]" id="genreEdm" class="genre-checkbox" checked>
+			<label for="genreEdm" class="genre-label">Eletronic</label>
+		</li>	
+		<li class="genre">
+			<input type="checkbox" name="genres[]" id="genrePop" class="genre-checkbox">
+			<label for="genrePop" class="genre-label">Pop</label>
+		</li>	
+		<li class="genre">
+			<input type="checkbox" name="genres[]" id="genreRock" class="genre-checkbox">
+			<label for="genreRock" class="genre-label">Rock</label>
+		</li>	
+		<li class="genre">
+			<input type="checkbox" name="genres[]" id="genreRap" class="genre-checkbox">
+			<label for="genreRap" class="genre-label">Rap/Hip-Hop</label>
+		</li>	
+	</ul>
+
+	<button type="button" class="button" ng-click="getArtist()">
+		<span class="button-default-text">Gimme Music</span>
+		<span class="button-click-text" ng-bind="buttonLabel"></span>
+	</button>
+	
+	<!-- ANGULAR -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+	<!-- FACTORIES -->
+	<script src="src/js/factory/artist.js"></script>
+
+	<!-- CONTROLLERS -->
+	<script src="src/js/controller/appCtrl.js"></script>
+	
+	<!-- APP -->
+	<script src="src/js/app.js"></script>
+
+	<!-- FIREBASE -->
+	<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+	<!-- ANGULARFIRE -->
+	<!-- <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script> -->
+</body>
+</html>
