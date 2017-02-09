@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="dist/css/app.min.css">
 	<title>Gimme Music</title>
 </head>
-<body ng-controller="AppCtrl">	
+<body ng-controller="AppCtrl" ng-init="init()">	
 	<svg-sprite svg-src="dist/img/img.svg"></svg-sprite>
 	
 	<div class="artist">
@@ -78,8 +78,5 @@
 
 	<!-- FIREBASE -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-
-	<!-- ANGULARFIRE -->
-	<!-- <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script> -->
 </body>
 </html>
