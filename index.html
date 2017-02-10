@@ -7,10 +7,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta name="theme-color" content="#fbb176">
-
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="dist/css/app.min.css">
 	<title>Gimme Music</title>
+	<link rel="icon" href="dist/img/icon-4x.png">
+	<link rel="manifest" href="manifest.json">
+	<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body ng-controller="AppCtrl" ng-init="init()">	
 	<svg-sprite svg-src="dist/img/img.svg"></svg-sprite>
@@ -65,7 +67,7 @@
 	</button>
 	
 	<!-- ANGULAR -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="src/js/angular.min.js"></script>
 
 	<!-- FACTORIES -->
 	<script src="src/js/factory/artist.js"></script>
@@ -77,6 +79,6 @@
 	<script src="src/js/app.js"></script>
 
 	<!-- FIREBASE -->
-	<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+	<script src="src/js/firebase.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 angular.module('GimmeMusic', [
 	'GimmeMusic.factory.artist',
-	'GimmeMusic.controller.appCtrl',
+	'GimmeMusic.controller.appCtrl'
 ])
 
 .run(function(){
@@ -13,6 +13,24 @@ angular.module('GimmeMusic', [
 	};
 
 	firebase.initializeApp(config);
+})
+
+.run(function(){
+	if(navigator.serviceWorker){
+		// navigator.serviceWorker.getRegistrations().then(
+		// 	function(registrations) {
+		// 		for(var i in registrations){
+		// 			registrations[i].unregister();
+		// 		}
+		// 	}
+		// );
+		
+		navigator.serviceWorker.register('sw.js');
+
+		navigator.serviceWorker.getRegistrations().then(function(registrations) {
+			console.log(registrations);
+		});
+	}
 })
 
 // .controller('AppCtrl', ['$scope', '$timeout', '$http', 'ArtistFactory', function($scope, $timeout, $http, ArtistFactory){

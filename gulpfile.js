@@ -14,6 +14,7 @@ gulp.task('minify-js', function() {
 		.pipe(rename({
 			suffix: '.min'
 		}))
+		.on('error', err => console.log)
 		.pipe(gulp.dest('dist/js/'));
 });
  
