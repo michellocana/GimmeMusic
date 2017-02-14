@@ -3,8 +3,7 @@ self.addEventListener('install', event => {
 		caches.open('static-v1')
 			.then(cache => cache.addAll([
 				// Static content
-				'./',
-				// './index.html',
+				'./index.html',
 
 				// Images
 				'./dist/img/icon-4x.png',
@@ -30,13 +29,17 @@ self.addEventListener('install', event => {
 })
 
 self.addEventListener('fetch', event => {
-	// console.log(event.request);
-	
 	event.respondWith(
 		caches.match(event.request)
 			.then(response => response || fetch(event.request))
 			.catch((err) => {
-				console.log(err);
+				const url = new URL(event.request.url);
+
+				if(url.pathname.endsWith('.jpg')){
+					console.log('jpg request');
+					console.log(url.pathname);
+					return fetch('dist/img/icon-4x.png')
+				}
 			})
 	)
 });
