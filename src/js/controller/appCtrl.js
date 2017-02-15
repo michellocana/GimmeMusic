@@ -1,12 +1,9 @@
 angular.module('GimmeMusic.controller.appCtrl', [])
 
-.controller('AppCtrl', ['$scope', '$timeout', '$http', 'ArtistFactory', function($scope, $timeout, $http, ArtistFactory){
+.controller('AppCtrl', ['$rootScope', '$scope', '$timeout', '$http', 'ArtistFactory', function($rootScope, $scope, $timeout, $http, ArtistFactory){
 	$scope.button = document.querySelector('button');
 	$scope.img = document.querySelector('img');
 	$scope.text = document.querySelector('.artist-name');
-
-	$scope.canClick = false;
-
 
 	$scope.buttonPhrases = [
 		'It will rock!',
@@ -18,20 +15,26 @@ angular.module('GimmeMusic.controller.appCtrl', [])
 	];
 
 	$scope.init = function(){
-		ArtistFactory.getArtists().then(function(result){
-			var artists = result.map(function(artist){
-				return {
-					id: artist.id,
-					name: artist.name
-				}
+		if($rootScope.online){
+			$scope.canClick = false;
+
+			ArtistFactory.getArtists().then(function(result){
+				var artists = result.map(function(artist){
+					return {
+						id: artist.id,
+						name: artist.name
+					}
+				});
+
+				artists = JSON.stringify(artists);
+
+				localStorage.setItem('GimmeMusic-artists', artists);
+
+				$scope.canClick = true;
 			});
-
-			artists = JSON.stringify(artists);
-
-			localStorage.setItem('GimmeMusic-artists', artists);
-
+		}else{
 			$scope.canClick = true;
-		});
+		}
 	};
 
 	$scope.getArtist = function(){

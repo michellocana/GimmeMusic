@@ -1,6 +1,6 @@
 angular.module('GimmeMusic.factory.artist', [])
 
-.factory('ArtistFactory', function() {
+.factory('ArtistFactory', function($rootScope, DEFAULTS) {
 	var 
 		_getArtists = function(){
 			var ref = firebase.database().ref("artists");
@@ -34,25 +34,34 @@ angular.module('GimmeMusic.factory.artist', [])
 
 				artist = artists[key];
 
-				ref = firebase.database().ref('artists/' + artist.id);
+				if($rootScope.online){
+					ref = firebase.database().ref('artists/' + artist.id);
 
-				ref.on('value', function(snapshot){
-					artist = snapshot.val();
+					ref.on('value', function(snapshot){
+						artist = snapshot.val();
 
-					_getStorageImage(artist.image).then(function(res){
-						artist.image = res;
-						artist.links = [
-							{
-								type: 'spotify',
-								url: artist.spotify.uri
-							}
-						]
+						_getStorageImage(artist.image).then(function(res){
+							artist.image = res;
+							artist.links = [
+								{
+									type: 'spotify',
+									url: artist.spotify.uri
+								}
+							]
 
-						resolve(artist);
-					});
-				}, function (errorObject) {
-					console.log(errorObject);
-				})
+							resolve(artist);
+						});
+					}, function (errorObject) {
+						console.log(errorObject);
+					})
+				}else{
+					artist.offlineResult = true;
+					artist.image = DEFAULTS.FALLBACK_IMG_URL;
+					artist.links = [];
+
+					resolve(artist);
+				}
+
 			});
 		},
 

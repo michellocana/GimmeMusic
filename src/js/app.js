@@ -3,18 +3,43 @@ angular.module('GimmeMusic', [
 	'GimmeMusic.controller.appCtrl'
 ])
 
-.run(function(){
-	var config = {
-		apiKey: "AIzaSyArqYqldbMgAY-w5Gx7hz08a1fJeP33aWs",
-		authDomain: "gimme-music-a41f6.firebaseapp.com",
-		databaseURL: "https://gimme-music-a41f6.firebaseio.com",
-		storageBucket: "gimme-music-a41f6.appspot.com",
-		messagingSenderId: "571198339326"
-	};
-
-	firebase.initializeApp(config);
+.constant('DEFAULTS', {
+	'FALLBACK_IMG_URL': './dist/img/logo.png'
 })
 
+// Internet connection watcher
+.run(function($window, $rootScope) {
+	$rootScope.online = navigator.onLine;
+
+	$window.addEventListener("offline", function() {
+		$rootScope.$apply(function() {
+			$rootScope.online = false;
+		});
+	}, false);
+
+	$window.addEventListener("online", function() {
+		$rootScope.$apply(function() {
+			$rootScope.online = true;
+		});
+	}, false);
+})
+
+// Firebase configuration
+.run(function($rootScope){
+	if ($rootScope.online) {
+		var config = {
+			apiKey: "AIzaSyArqYqldbMgAY-w5Gx7hz08a1fJeP33aWs",
+			authDomain: "gimme-music-a41f6.firebaseapp.com",
+			databaseURL: "https://gimme-music-a41f6.firebaseio.com",
+			storageBucket: "gimme-music-a41f6.appspot.com",
+			messagingSenderId: "571198339326"
+		};
+
+		firebase.initializeApp(config);
+	}
+})
+
+// ServiceWorker register
 .run(function(){
 	if(navigator.serviceWorker){
 		// navigator.serviceWorker.getRegistrations().then(

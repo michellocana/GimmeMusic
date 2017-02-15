@@ -8,6 +8,7 @@ self.addEventListener('install', event => {
 				// Images
 				'./dist/img/icon-4x.png',
 				'./dist/img/img.svg',
+				'./dist/img/logo.png',
 
 				// Stylesheets
 				'./dist/css/app.min.css',
@@ -23,23 +24,50 @@ self.addEventListener('install', event => {
 				'./src/js/firebase.js'
 			]))
 			.catch(err => {
-				alert(err);
+				console.log(err);
 			})
 	)
 })
 
 self.addEventListener('fetch', event => {
 	event.respondWith(
-		caches.match(event.request)
-			.then(response => response || fetch(event.request))
+		caches
+			.match(event.request)
+			.then(cached => fetch(event.request))
 			.catch((err) => {
 				const url = new URL(event.request.url);
 
-				if(url.pathname.endsWith('.jpg')){
-					console.log('jpg request');
-					console.log(url.pathname);
-					return fetch('dist/img/icon-4x.png')
+				// Responding with default image
+				if(url.pathname.endsWith('.jpg') || url.pathname.endsWith('.png')){
+					return fetch('dist/img/logo.png');
 				}
+
+				console.log(err);
 			})
 	)
 });
+
+// other things
+// const url = new URL(event.request.url);
+
+// fetch(url).then(response => {
+// 	console.log(response, url);
+
+// 	if(
+// 		response.status === 404 && 
+// 		(url.pathname.endsWith('.jpg') || url.pathname.endsWith('.png'))
+// 	){
+// 		return fetch('dist/img/icon-4x.png')
+// 	}
+// });
+
+/*
+console.log(url);
+console.log(err);
+
+if(url.pathname.endsWith('.jpg') || url.pathname.endsWith('.png')){
+	console.log('image request');
+	console.log(url.pathname);
+	return fetch('http://localhost:3000/dist/img/icon-4x.png')
+}
+*/
