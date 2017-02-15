@@ -46,28 +46,3 @@ self.addEventListener('fetch', event => {
 			})
 	)
 });
-
-// other things
-// const url = new URL(event.request.url);
-
-// fetch(url).then(response => {
-// 	console.log(response, url);
-
-// 	if(
-// 		response.status === 404 && 
-// 		(url.pathname.endsWith('.jpg') || url.pathname.endsWith('.png'))
-// 	){
-// 		return fetch('dist/img/icon-4x.png')
-// 	}
-// });
-
-/*
-console.log(url);
-console.log(err);
-
-if(url.pathname.endsWith('.jpg') || url.pathname.endsWith('.png')){
-	console.log('image request');
-	console.log(url.pathname);
-	return fetch('http://localhost:3000/dist/img/icon-4x.png')
-}
-*/

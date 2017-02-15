@@ -9,7 +9,7 @@ const browserSync 	= require('browser-sync').create();
 const reload      	= browserSync.reload;
  
 gulp.task('minify-js', function() {
-	return gulp.src(['src/js/*.js'])
+	return gulp.src(['src/js/*.js', '!src/js/*.min.js'])
 		.pipe(uglify())        
 		.pipe(rename({
 			suffix: '.min'
