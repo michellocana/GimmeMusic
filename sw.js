@@ -19,6 +19,7 @@ self.addEventListener('install', event => {
 				// Javascripts
 				'./src/js/angular.min.js',
 				'./src/js/factory/artist.js',
+				'./src/js/directive/directives.js',
 				'./src/js/controller/appCtrl.js',
 				'./src/js/app.js',
 				'./src/js/firebase.js'

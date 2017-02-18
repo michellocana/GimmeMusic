@@ -39,31 +39,26 @@
 		{{artist.name || 'Choose your styles and i give you an artist'}}
 	</h1>
 
-	<ul class="genres">
+	<ul class="genres" ng-controller="CheckboxCtrl" ng-init="init()">
 		<li class="genre">
 			Styles i like:
 		</li>
 		<li class="genre">
-			<input type="checkbox" name="genres[]" id="genreEdm" class="genre-checkbox" checked>
-			<label for="genreEdm" class="genre-label">Eletronic</label>
+			<genre genre-id="genreEdm" genre-checked="genres.edm" genre-name="edm">Eletronic</genre>
 		</li>	
 		<li class="genre">
-			<input type="checkbox" name="genres[]" id="genrePop" class="genre-checkbox">
-			<label for="genrePop" class="genre-label">Pop</label>
+			<genre genre-id="genrePop" genre-checked="genres.pop" genre-name="pop">Pop</genre>
 		</li>	
 		<li class="genre">
-			<input type="checkbox" name="genres[]" id="genreRock" class="genre-checkbox">
-			<label for="genreRock" class="genre-label">Rock</label>
+			<genre genre-id="genreRock" genre-checked="genres.rock" genre-name="rock">Rock</genre>
 		</li>	
 		<li class="genre">
-			<input type="checkbox" name="genres[]" id="genreRap" class="genre-checkbox">
-			<label for="genreRap" class="genre-label">Rap/Hip-Hop</label>
+			<genre genre-id='genreRap' genre-checked="genres.rap" genre-name="rap">Rap/Hip-Hop</genre>
 		</li>	
 	</ul>
 
 	<button type="button" class="button" ng-click="getArtist()">
 		<span class="button-default-text">Gimme Music</span>
-		<span class="button-click-text" ng-bind="buttonLabel"></span>
 	</button>
 	
 	<!-- ANGULAR -->
@@ -72,8 +67,12 @@
 	<!-- FACTORIES -->
 	<script src="src/js/factory/artist.js"></script>
 
+	<!-- DIRECTIVES -->
+	<script src="src/js/directive/directives.js"></script>
+
 	<!-- CONTROLLERS -->
 	<script src="src/js/controller/appCtrl.js"></script>
+	<script src="src/js/controller/checkboxCtrl.js"></script>
 	
 	<!-- APP -->
 	<script src="src/js/app.js"></script>

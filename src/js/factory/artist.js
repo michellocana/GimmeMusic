@@ -2,6 +2,15 @@ angular.module('GimmeMusic.factory.artist', [])
 
 .factory('ArtistFactory', function($rootScope, DEFAULTS) {
 	var 
+		artists = localStorage.getItem('GimmeMusic-artists'),
+		artists = JSON.parse(artists),
+
+		_arrayFindOne = function (haystack, needle) {
+			return needle.some(function(v){
+				return haystack.indexOf(v) > -1;
+			});
+		};
+
 		_getArtists = function(){
 			var ref = firebase.database().ref("artists");
 
@@ -24,15 +33,26 @@ angular.module('GimmeMusic.factory.artist', [])
 		},
 
 		_getRandomArtist = function(){
+			var key = ~~(Math.random() * (artists.length));
+
+			return artists[key];
+		},
+
+		_getRandomArtistInfo = function(){
 			return new Promise(function(resolve, reject){
-				var artists, artist, key, ref;
+				var artist, ref, genres;
 
-				artists = localStorage.getItem('GimmeMusic-artists');
-				artists = JSON.parse(artists);
+				genres = localStorage.getItem('GimmeMusic-genres');
+				genres = JSON.parse(genres);
+				genres = Object.keys(genres).filter(function(key, obj){
+					return genres[key];
+				});
 
-				key = ~~(Math.random() * (artists.length));
-
-				artist = artists[key];
+				while(artist = _getRandomArtist()){
+					if(_arrayFindOne(artist.genres, genres)){
+						break;
+					}
+				}
 
 				if($rootScope.online){
 					ref = firebase.database().ref('artists/' + artist.id);
@@ -71,7 +91,7 @@ angular.module('GimmeMusic.factory.artist', [])
 	;
 
 	return {
-		getArtists: 		_getArtists,
-		getRandomArtist: 	_getRandomArtist
+		getArtists: 			_getArtists,
+		getRandomArtistInfo: 	_getRandomArtistInfo
 	};
  });

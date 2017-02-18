@@ -1,6 +1,13 @@
 angular.module('GimmeMusic', [
+	// Factories
 	'GimmeMusic.factory.artist',
-	'GimmeMusic.controller.appCtrl'
+	
+	// Controllers
+	'GimmeMusic.controller.appCtrl',
+	'GimmeMusic.controller.checkboxCtrl',
+
+	// Directives
+	'GimmeMusic.directive.artist'
 ])
 
 .constant('DEFAULTS', {
@@ -52,26 +59,13 @@ angular.module('GimmeMusic', [
 		
 		navigator.serviceWorker.register('sw.js');
 
-		navigator.serviceWorker.getRegistrations().then(function(registrations) {
-			console.log(registrations);
-		});
+		// navigator.serviceWorker.getRegistrations().then(function(registrations) {
+		// 	console.log(registrations);
+		// });
 	}
 })
 
-// Getting SVG icons
-.directive('svgSprite', function($http, $compile){
-	return {
-		restrict: 'E',
-		replace: true,
-		template: '<div class="svg-sprite" ng-bind-html="sprite | toTrustedHTML"></div>',
-		link: function(scope, element, attributes){
-			$http.get(attributes.svgSrc)
-				.then(function(res){
-					scope.sprite = res.data;
-				});
-		}
-	};
-})
+
 
 // Parse string as HTML filter
 .filter('toTrustedHTML', ['$sce', function($sce){

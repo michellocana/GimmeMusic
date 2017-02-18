@@ -5,15 +5,6 @@ angular.module('GimmeMusic.controller.appCtrl', [])
 	$scope.img = document.querySelector('img');
 	$scope.text = document.querySelector('.artist-name');
 
-	$scope.buttonPhrases = [
-		'It will rock!',
-		'Drop the bass!',
-		'Pop it!',
-		'Feel the Rhythm!',
-		'How about that?',
-		'Oh yeh!',
-	];
-
 	$scope.init = function(){
 		if($rootScope.online){
 			$scope.canClick = false;
@@ -22,7 +13,8 @@ angular.module('GimmeMusic.controller.appCtrl', [])
 				var artists = result.map(function(artist){
 					return {
 						id: artist.id,
-						name: artist.name
+						name: artist.name,
+						genres: artist.genres
 					}
 				});
 
@@ -41,7 +33,7 @@ angular.module('GimmeMusic.controller.appCtrl', [])
 		if ($scope.canClick) {
 			$scope.canClick = !$scope.canClick;
 
-			ArtistFactory.getRandomArtist()
+			ArtistFactory.getRandomArtistInfo()
 				.then($scope.handleArtist)
 				.then($scope.changeLabel)
 		}
