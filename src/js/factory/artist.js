@@ -2,8 +2,10 @@ angular.module('GimmeMusic.factory.artist', [])
 
 .factory('ArtistFactory', function($rootScope, DEFAULTS) {
 	var 
-		artists = localStorage.getItem('GimmeMusic-artists'),
-		artists = JSON.parse(artists),
+		_getLocalStorageArtist = function(){
+			var artists = localStorage.getItem('GimmeMusic-artists');
+			return JSON.parse(artists);
+		}
 
 		_arrayFindOne = function (haystack, needle) {
 			return needle.some(function(v){
@@ -33,14 +35,19 @@ angular.module('GimmeMusic.factory.artist', [])
 		},
 
 		_getRandomArtist = function(){
-			var key = ~~(Math.random() * (artists.length));
+			var artists, key;
+
+			artists = _getLocalStorageArtist();
+			key = ~~(Math.random() * (artists.length));
 
 			return artists[key];
 		},
 
 		_getRandomArtistInfo = function(){
 			return new Promise(function(resolve, reject){
-				var artist, ref, genres;
+				var artist, artists, ref, genres;
+
+				artists = _getLocalStorageArtist();
 
 				genres = localStorage.getItem('GimmeMusic-genres');
 				genres = JSON.parse(genres);
