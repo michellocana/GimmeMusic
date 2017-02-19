@@ -69,12 +69,21 @@ angular.module('GimmeMusic.factory.artist', [])
 
 						_getStorageImage(artist.image).then(function(res){
 							artist.image = res;
-							artist.links = [
-								{
+							artist.links = [];
+
+							if(artist.spotify){
+								artist.links.push({
 									type: 'spotify',
 									url: artist.spotify.uri
-								}
-							]
+								});
+							}
+
+							if(artist.soundcloud){
+								artist.links.push({
+									type: 'soundcloud',
+									url: artist.soundcloud.url
+								});
+							}
 
 							resolve(artist);
 						});
